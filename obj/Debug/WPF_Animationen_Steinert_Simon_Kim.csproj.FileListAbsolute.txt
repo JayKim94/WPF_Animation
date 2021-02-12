@@ -1,0 +1,15 @@
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\WPF_Animationen_Steinert_Simon_Kim.csprojAssemblyReference.cache
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\MainWindow.g.cs
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\App.g.cs
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\WPF_Animationen_Steinert_Simon_Kim_MarkupCompile.cache
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\WPF_Animationen_Steinert_Simon_Kim_MarkupCompile.lref
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\bin\Debug\WPF_Animationen_Steinert_Simon_Kim.exe.config
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\bin\Debug\WPF_Animationen_Steinert_Simon_Kim.exe
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\bin\Debug\WPF_Animationen_Steinert_Simon_Kim.pdb
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\MainWindow.baml
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\WPF_Animationen_Steinert_Simon_Kim.g.resources
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\WPF_Animationen_Steinert_Simon_Kim.Properties.Resources.resources
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\WPF_Animationen_Steinert_Simon_Kim.csproj.GenerateResource.cache
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\WPF_Animationen_Steinert_Simon_Kim.csproj.CoreCompileInputs.cache
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\WPF_Animationen_Steinert_Simon_Kim.exe
+C:\Users\Jay\Desktop\PRG_FEE\PRG_WPF\WPF_Animationen_Steinert_Simon_Kim\obj\Debug\WPF_Animationen_Steinert_Simon_Kim.pdb

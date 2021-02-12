@@ -6,8 +6,37 @@
         xmlns:local="clr-namespace:WPF_Animationen_Steinert_Simon_Kim"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        Title="MainWindow">
-    <Grid>
-        
-    </Grid>
+        Title="Animation">
+    <StackPanel>
+        <!-- Menu -->
+        <DockPanel x:Name="panelMenu" LastChildFill="False">
+            <Image DockPanel.Dock="Left" Source="img/liste.png" Width="10" Margin="10"/>
+        </DockPanel>
+        <!-- Timer -->
+        <StackPanel Height="300" Background="#505050">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Foreground" Value="WhiteSmoke"/>
+                    <Setter Property="FontSize" Value="30"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock x:Name="tblZeit" Text="0.000" Margin="0 125 0 0"/>
+            <TextBlock Text="Sek." FontSize="12"/>
+        </StackPanel>
+        <!-- Button -->
+        <Grid Height="150" Width="300" Background="#303030">
+            <Button Width="100" Height="100" Content="Starten" Foreground="WhiteSmoke" Click="ButtonStart_Clicked">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Fill="IndianRed"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+    </StackPanel>
 </Window>
