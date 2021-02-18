@@ -7,36 +7,91 @@
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         Title="Animation">
-    <StackPanel>
-        <!-- Menu -->
-        <DockPanel x:Name="panelMenu" LastChildFill="False">
-            <Image DockPanel.Dock="Left" Source="img/liste.png" Width="10" Margin="10"/>
-        </DockPanel>
-        <!-- Timer -->
-        <StackPanel Height="300" Background="#505050">
+    <StackPanel Orientation="Horizontal">
+        <!-- Menu Window -->
+        <StackPanel x:Name="panelMenu"
+                    Width="0"
+                    Background="#303030">
             <StackPanel.Resources>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Foreground" Value="WhiteSmoke"/>
-                    <Setter Property="FontSize" Value="30"/>
-                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="10 20" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="Foreground" Value="whitesmoke" />
+                    <Setter Property="FontSize" Value="15" />
                 </Style>
             </StackPanel.Resources>
-            <TextBlock x:Name="tblZeit" Text="0.000" Margin="0 125 0 0"/>
-            <TextBlock Text="Sek." FontSize="12"/>
-        </StackPanel>
-        <!-- Button -->
-        <Grid Height="150" Width="300" Background="#303030">
-            <Button Width="100" Height="100" Content="Starten" Foreground="WhiteSmoke" Click="ButtonStart_Clicked">
+            <Button x:Name="btnStopuhr">
                 <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Ellipse Fill="IndianRed"/>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Stopuhr" VerticalAlignment="Center"/>
+                        </StackPanel>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-        </Grid>
+            <Button x:Name="btnWecker">
+                <Button.Template>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Wecker" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="btnTimer">
+                <Button.Template>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Timer" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+        <!-- Main Window -->
+        <StackPanel>
+            <!-- Menu -->
+            <DockPanel LastChildFill="False">
+                <Button x:Name="btnMenu">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image DockPanel.Dock="Left" Source="img/liste.png" Opacity=".5" Width="10" Margin="10"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </DockPanel>
+            <!-- Timer -->
+            <StackPanel 
+                x:Name="timerBackground"
+                Height="300" Background="#505050">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Foreground" Value="WhiteSmoke"/>
+                        <Setter Property="FontSize" Value="30"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock x:Name="tblZeit" Text="0.00" Margin="0 125 0 0"/>
+                <TextBlock Text="Sek." FontSize="12"/>
+            </StackPanel>
+            <!-- Button -->
+            <Grid 
+                x:Name="buttonBackground"
+                Height="150" Width="300" Background="#303030">
+                <Button Width="100" Height="100" Content="Starten" Foreground="WhiteSmoke" Click="ButtonStart_Clicked">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Fill="IndianRed"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+        </StackPanel>
     </StackPanel>
 </Window>
