@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace WPF_Animationen_Steinert_Simon_Kim
@@ -33,11 +23,15 @@ namespace WPF_Animationen_Steinert_Simon_Kim
         private void Init()
         {
             // Timer
-
             dt.Tick += new EventHandler(dt_Tick);
             dt.Interval = new TimeSpan(0, 0, 0, 0, 1);
 
-            
+            // Exit Button
+            btnExit.Click += delegate (object sender, RoutedEventArgs args)
+            {
+                Application.Current.Shutdown();
+            };
+
             /*
              * Animation Menu (Ein-/Ausblenden)
              */
@@ -48,6 +42,11 @@ namespace WPF_Animationen_Steinert_Simon_Kim
                 To = 200,
                 Duration = duration,
             };
+            expandAnimation.Completed += delegate (object sender, EventArgs args)
+            {
+                panelMenuButtons.Visibility = Visibility.Visible;
+            };
+
             Storyboard.SetTargetName(expandAnimation, panelMenu.Name);
             Storyboard.SetTargetProperty(expandAnimation, new PropertyPath(StackPanel.WidthProperty));
 
@@ -56,6 +55,7 @@ namespace WPF_Animationen_Steinert_Simon_Kim
                 To = 0,
                 Duration = duration,
             };
+            
             Storyboard.SetTargetName(shrinkAnimation, panelMenu.Name);
             Storyboard.SetTargetProperty(shrinkAnimation, new PropertyPath(StackPanel.WidthProperty));
 
@@ -64,16 +64,33 @@ namespace WPF_Animationen_Steinert_Simon_Kim
             expandStoryboard.Children.Add(expandAnimation);
             shrinkStoryboard.Children.Add(shrinkAnimation);
 
+            /*
+             * Animation Pfeile
+             */
+            TimeSpan rotateDuration = TimeSpan.FromMilliseconds(1000);
+            DoubleAnimation rotateAnimation = new DoubleAnimation(0, 180, rotateDuration);
+            DoubleAnimation rotateAnimationReverse = new DoubleAnimation(180, 0, rotateDuration);
+            RotateTransform rotateTransform = new RotateTransform();
+
+            btnMenu.RenderTransform = rotateTransform;
+            btnMenu.RenderTransformOrigin = new Point(0.5, 0.5);
+
+            /*
+             * On Click
+             */
             btnMenu.Click += delegate (object sender, RoutedEventArgs args)
             {
                 if (!isMenuOpen)
                 {
                     expandStoryboard.Begin(panelMenu);
+                    rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
                     isMenuOpen = true;
                 }
                 else
                 {
+                    panelMenuButtons.Visibility = Visibility.Hidden;
                     shrinkStoryboard.Begin(panelMenu);
+                    rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimationReverse);
                     isMenuOpen = false;
                 }
             };
@@ -81,13 +98,22 @@ namespace WPF_Animationen_Steinert_Simon_Kim
 
         private void ButtonStart_Clicked(object sender, EventArgs e)
         {
-            dt.Start();
-            sw.Start();
+            Button btn = sender as Button;
+            if ((string)btn.Content == "Starten")
+            {
+                dt.Start();
+                sw.Start();
+                btn.Content = "Stoppen";
+            }
+            else
+            {
+                sw.Stop();
+                btn.Content = "Starten";
+            }
 
             /*
              * Animation Button (beim Klicken)
              */
-            Button btn = sender as Button;
             double time = 0.3;
             DoubleAnimation doubleAnimation = new DoubleAnimation(100, 80, TimeSpan.FromSeconds(time));
             DoubleAnimation doubleAnimationReverse = new DoubleAnimation(80, 100, TimeSpan.FromSeconds(time));
@@ -128,7 +154,7 @@ namespace WPF_Animationen_Steinert_Simon_Kim
             if (sw.IsRunning)
             {
                 TimeSpan ts = sw.Elapsed;
-                ElapsedTime = string.Format("{0:00}.{1:0} s", ts.Seconds, ts.Milliseconds);
+                ElapsedTime = string.Format("{0:0}.{1:00}", ts.Seconds, ts.Milliseconds);
                 tblZeit.Text = ElapsedTime;
             }
         }
