@@ -6,6 +6,12 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
+/*
+ * 19.02.2021
+ * PBAT3H19A
+ * Till Simon, Linus Steinert, Jawoon Kim
+ * WPF Animation Stoppuhr
+ */
 namespace WPF_Animationen_Steinert_Simon_Kim
 {
     public partial class MainWindow : Window
@@ -31,9 +37,22 @@ namespace WPF_Animationen_Steinert_Simon_Kim
             {
                 Application.Current.Shutdown();
             };
+        }
 
+        private void dt_Tick(object sender, EventArgs e)
+        {
+            if (sw.IsRunning)
+            {
+                TimeSpan ts = sw.Elapsed;
+                ElapsedTime = string.Format("{0:0}.{1:00}", ts.Seconds, ts.Milliseconds);
+                tblZeit.Text = ElapsedTime;
+            }
+        }
+
+        private void ButtonMenu_Clicked(object sender, RoutedEventArgs e)
+        {
             /*
-             * Animation Menu (Ein-/Ausblenden)
+             * Animation Menü-Fenster
              */
             TimeSpan duration = TimeSpan.FromMilliseconds(1000);
 
@@ -42,7 +61,8 @@ namespace WPF_Animationen_Steinert_Simon_Kim
                 To = 200,
                 Duration = duration,
             };
-            expandAnimation.Completed += delegate (object sender, EventArgs args)
+
+            expandAnimation.Completed += delegate (object s, EventArgs a)
             {
                 panelMenuButtons.Visibility = Visibility.Visible;
             };
@@ -55,7 +75,7 @@ namespace WPF_Animationen_Steinert_Simon_Kim
                 To = 0,
                 Duration = duration,
             };
-            
+
             Storyboard.SetTargetName(shrinkAnimation, panelMenu.Name);
             Storyboard.SetTargetProperty(shrinkAnimation, new PropertyPath(StackPanel.WidthProperty));
 
@@ -75,28 +95,22 @@ namespace WPF_Animationen_Steinert_Simon_Kim
             btnMenu.RenderTransform = rotateTransform;
             btnMenu.RenderTransformOrigin = new Point(0.5, 0.5);
 
-            /*
-             * On Click
-             */
-            btnMenu.Click += delegate (object sender, RoutedEventArgs args)
+            if (!isMenuOpen)
             {
-                if (!isMenuOpen)
-                {
-                    expandStoryboard.Begin(panelMenu);
-                    rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
-                    isMenuOpen = true;
-                }
-                else
-                {
-                    panelMenuButtons.Visibility = Visibility.Hidden;
-                    shrinkStoryboard.Begin(panelMenu);
-                    rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimationReverse);
-                    isMenuOpen = false;
-                }
-            };
+                expandStoryboard.Begin(panelMenu);
+                rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
+                isMenuOpen = true;
+            }
+            else
+            {
+                panelMenuButtons.Visibility = Visibility.Hidden;
+                shrinkStoryboard.Begin(panelMenu);
+                rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimationReverse);
+                isMenuOpen = false;
+            }
         }
 
-        private void ButtonStart_Clicked(object sender, EventArgs e)
+        private void ButtonStart_Clicked(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             if ((string)btn.Content == "Starten")
@@ -104,11 +118,53 @@ namespace WPF_Animationen_Steinert_Simon_Kim
                 dt.Start();
                 sw.Start();
                 btn.Content = "Stoppen";
+
+                /*
+                 * Animation Button (beim Klicken)
+                 */
+                Storyboard stimerVergroeßern = new Storyboard();
+                DoubleAnimation dAtimerVergroeßern = new DoubleAnimation(55, new Duration(TimeSpan.FromSeconds(1)));
+                stimerVergroeßern.Children.Add(dAtimerVergroeßern);
+                Storyboard.SetTargetProperty(dAtimerVergroeßern, new PropertyPath(TextBlock.FontSizeProperty));
+                stimerVergroeßern.Begin(tblZeit);
+
+                Storyboard sTimerBackground = new Storyboard();
+                DoubleAnimation dABackgroundVerkleinern = new DoubleAnimation(325, new Duration(TimeSpan.FromSeconds(1)));
+                sTimerBackground.Children.Add(dABackgroundVerkleinern);
+                Storyboard.SetTargetProperty(dABackgroundVerkleinern, new PropertyPath(StackPanel.HeightProperty));
+                sTimerBackground.Begin(timerBackground);
+
+                Storyboard sbuttonBackground = new Storyboard();
+                DoubleAnimation dABackgroundVergroeßern = new DoubleAnimation(125, new Duration(TimeSpan.FromSeconds(1)));
+                sbuttonBackground.Children.Add(dABackgroundVergroeßern);
+                Storyboard.SetTargetProperty(dABackgroundVergroeßern, new PropertyPath(StackPanel.HeightProperty));
+                sbuttonBackground.Begin(buttonBackground);
             }
             else
             {
                 sw.Stop();
                 btn.Content = "Starten";
+
+                /*
+                 * Animation Button Reverse
+                 */
+                Storyboard stimerVerkleinern = new Storyboard();
+                DoubleAnimation dAtimerVerkleinern = new DoubleAnimation(30, new Duration(TimeSpan.FromSeconds(1)));
+                stimerVerkleinern.Children.Add(dAtimerVerkleinern);
+                Storyboard.SetTargetProperty(dAtimerVerkleinern, new PropertyPath(TextBlock.FontSizeProperty));
+                stimerVerkleinern.Begin(tblZeit);
+
+                Storyboard sTimerBackground = new Storyboard();
+                DoubleAnimation dABackgroundVergroeßern = new DoubleAnimation(300, new Duration(TimeSpan.FromSeconds(1)));
+                sTimerBackground.Children.Add(dABackgroundVergroeßern);
+                Storyboard.SetTargetProperty(dABackgroundVergroeßern, new PropertyPath(StackPanel.HeightProperty));
+                sTimerBackground.Begin(timerBackground);
+
+                Storyboard sbuttonBackground = new Storyboard();
+                DoubleAnimation dABackgroundVerkleinern = new DoubleAnimation(150, new Duration(TimeSpan.FromSeconds(1)));
+                sbuttonBackground.Children.Add(dABackgroundVerkleinern);
+                Storyboard.SetTargetProperty(dABackgroundVerkleinern, new PropertyPath(StackPanel.HeightProperty));
+                sbuttonBackground.Begin(buttonBackground);
             }
 
             /*
@@ -125,38 +181,6 @@ namespace WPF_Animationen_Steinert_Simon_Kim
             };
             btn.BeginAnimation(HeightProperty, doubleAnimation);
             btn.BeginAnimation(WidthProperty, doubleAnimation);
-
-            /*
-             * Animation Button (beim Klicken)
-             */
-            Storyboard stimerVergroeßern = new Storyboard();
-            DoubleAnimation dAtimerVergroeßern = new DoubleAnimation(55, new Duration(TimeSpan.FromSeconds(1)));
-            stimerVergroeßern.Children.Add(dAtimerVergroeßern);
-            Storyboard.SetTargetProperty(dAtimerVergroeßern, new PropertyPath(TextBlock.FontSizeProperty));
-            stimerVergroeßern.Begin(tblZeit);
-
-            Storyboard sTimerBackground = new Storyboard();
-            DoubleAnimation dABackgroundVerkleinern = new DoubleAnimation(325, new Duration(TimeSpan.FromSeconds(1)));
-            sTimerBackground.Children.Add(dABackgroundVerkleinern);
-            Storyboard.SetTargetProperty(dABackgroundVerkleinern, new PropertyPath(StackPanel.HeightProperty));
-            sTimerBackground.Begin(timerBackground);
-
-            Storyboard sbuttonBackground = new Storyboard();
-            DoubleAnimation dABackgroundVergroeßern = new DoubleAnimation(125, new Duration(TimeSpan.FromSeconds(1)));
-            sbuttonBackground.Children.Add(dABackgroundVergroeßern);
-            Storyboard.SetTargetProperty(dABackgroundVergroeßern, new PropertyPath(StackPanel.HeightProperty));
-            sbuttonBackground.Begin(buttonBackground);
-        }
-    
-
-        private void dt_Tick(object sender, EventArgs e)
-        {
-            if (sw.IsRunning)
-            {
-                TimeSpan ts = sw.Elapsed;
-                ElapsedTime = string.Format("{0:0}.{1:00}", ts.Seconds, ts.Milliseconds);
-                tblZeit.Text = ElapsedTime;
-            }
         }
     }
 }

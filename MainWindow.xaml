@@ -65,7 +65,7 @@
             <DockPanel 
                 Background="#e09f3e"
                 LastChildFill="False">
-                <Button x:Name="btnMenu">
+                <Button x:Name="btnMenu" Click="ButtonMenu_Clicked">
                     <Button.Template>
                         <ControlTemplate>
                             <Grid>
